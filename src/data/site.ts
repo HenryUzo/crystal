@@ -30,7 +30,9 @@ export const images = {
 } as const;
 
 export const content = {
-  /** Optional: place an approved Crystal Kizor video in public/media and set the path here. */
+  /** YouTube video shown as a muted, looping decorative hero background. */
+  heroYouTubeId: "d44LY7rv_4k" as string | null,
+  /** Optional local fallback if YouTube is disabled or replaced later. */
   heroVideoSrc: null as string | null,
   about:
     "Crystal Kizor works across architecture, interior design, furniture, education and social initiatives. Through ventures such as Studio COKA, ELEvated and The Effective Architect, she connects the built environment with thoughtful design and professional growth. Her wider work creates space for learning, opportunity and purposeful conversations.",
