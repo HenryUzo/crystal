@@ -37,10 +37,13 @@ Motion uses ScrollTrigger scrubbing for the hero image, typography fade and subt
 
 **Current Unsplash photography is temporary, licensed visual direction, NOT Crystal Kizor's work or Studio COKA projects.** Replace it before launch and remove the small temporary-image disclosure once all imagery is approved.
 
-- `src/data/site.ts`: all image URLs, company descriptions, outbound links and approved video path.
+- `src/data/site.ts`: all image URLs, company descriptions, outbound links and hero-video settings.
 - `public/media/`: put production-ready AVIF/WebP/JPG/video here.
-- To use a Crystal-approved hero film, place it at `public/media/crystal-hero.mp4` and set `heroVideoSrc: "/media/crystal-hero.mp4"` in `src/data/site.ts`. Keep the hero image as poster fallback. Do not use the supplied screen recording as brand footage.
-- Optimize video for mobile, mute/autoplay/loop and serve an image fallback; do not depend on sound.
+- **Current hero:** the owner-supplied [YouTube video](https://www.youtube.com/watch?v=d44LY7rv_4k) is embedded using a privacy-enhanced YouTube iframe, muted, autoplaying and set to loop, with no visible player controls. It is a background layer, not an interactive player.
+- The existing architectural image remains underneath as the still background before playback and for reduced-motion users. Playback also stops when the hero leaves the viewport to avoid wasting resources.
+- To swap to a local approved MP4, set `heroYouTubeId: null`, place `public/media/crystal-hero.mp4` in the repository and set `heroVideoSrc: "/media/crystal-hero.mp4"`.
+- YouTube autoplay and embedding can be blocked by browser settings, connection restrictions or the video's own permissions. A YouTube iframe can still display platform branding or interruptions; for absolute visual control use a licensed, self-hosted video file.
+- Confirm permission to use the footage on the website. Keep video muted and ensure meaningful content remains accessible if motion is unavailable.
 - Confirm rights, image descriptions, legal claims, and links before publishing.
 
 ## Content sources and caution
