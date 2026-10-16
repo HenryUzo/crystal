@@ -87,19 +87,62 @@ function SiteNav() {
   );
 }
 
+function HeroBackground() {
+  const backgroundRef = useRef<HTMLDivElement>(null);
+  const [canPlay, setCanPlay] = useState(false);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let isVisible = true;
+
+    const updatePlayback = () => setCanPlay(isVisible && !reducedMotion.matches);
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      updatePlayback();
+    });
+
+    if (backgroundRef.current) observer.observe(backgroundRef.current);
+    reducedMotion.addEventListener("change", updatePlayback);
+    updatePlayback();
+
+    return () => {
+      observer.disconnect();
+      reducedMotion.removeEventListener("change", updatePlayback);
+    };
+  }, []);
+
+  const youtubeId = content.heroYouTubeId;
+  const youtubeSrc = youtubeId
+    ? `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${youtubeId}&playsinline=1&rel=0&fs=0&disablekb=1&iv_load_policy=3`
+    : null;
+
+  return (
+    <div className="hero__background" ref={backgroundRef}>
+      {/* The image remains visible while YouTube loads and if autoplay or embedding fails. */}
+      <img className="hero__poster" src={images.hero.src} alt="" fetchPriority="high" />
+      {canPlay && youtubeSrc ? (
+        <iframe
+          className="hero__youtube"
+          src={youtubeSrc}
+          title="Decorative video background for Crystal Kizor"
+          tabIndex={-1}
+          aria-hidden="true"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          referrerPolicy="strict-origin-when-cross-origin"
+        />
+      ) : canPlay && content.heroVideoSrc ? (
+        <video className="hero__local-video" autoPlay muted loop playsInline aria-hidden="true">
+          <source src={content.heroVideoSrc} type="video/mp4" />
+        </video>
+      ) : null}
+    </div>
+  );
+}
+
 function Hero() {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
-      <div className="hero__background">
-        {/* Reference imagery only; replace with approved Crystal Kizor film or photography before launch. */}
-        {content.heroVideoSrc ? (
-          <video autoPlay muted loop playsInline poster={images.hero.src} aria-hidden="true">
-            <source src={content.heroVideoSrc} type="video/mp4" />
-          </video>
-        ) : (
-          <img src={images.hero.src} alt="" fetchPriority="high" onError={(e) => { e.currentTarget.style.visibility = "hidden"; }} />
-        )}
-      </div>
+      <HeroBackground />
       <div className="hero__shade" />
       <div className="hero__side-label" aria-hidden="true">CRYSTAL KIZOR — INDEPENDENT PRACTICE / 2026</div>
       <div className="hero__content">
