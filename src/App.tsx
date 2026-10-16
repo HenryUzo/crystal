@@ -92,7 +92,6 @@ function Hero() {
         )}
       </div>
       <div className="hero__shade" />
-      <SiteNav />
       <div className="hero__side-label" aria-hidden="true">CRYSTAL KIZOR — INDEPENDENT PRACTICE / 2026</div>
       <div className="hero__content">
         <div className="hero__intro" data-hero-intro>
@@ -392,6 +391,7 @@ export default function App() {
     <div ref={pageRef} className="site-shell">
       <a href="#about" className="skip-link">Skip introduction</a>
       <div ref={progressRef} className="reading-progress" aria-hidden="true" />
+      <SiteNav />
       <main>
         <Hero />
         <EditorialIntro />
